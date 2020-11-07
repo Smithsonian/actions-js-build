@@ -24,6 +24,13 @@ then
   cd "$WD_PATH"
 fi
 
+# Replace gitignore with ci-gitignore if it exists
+echo "Checking for .gitignore-ci"
+if test -e .gitignore-ci
+then
+  cp .gitignore-ci .gitignore
+fi
+
 # Set up .netrc file with GitHub credentials
 git_setup ( ) {
   # Git requires our "name" and email address -- use GitHub handle
@@ -31,13 +38,13 @@ git_setup ( ) {
   git config user.name "$GITHUB_ACTOR"
 }
 
-# This section only runs if there have been file changes
 echo "Checking for uncommitted changes in the git working tree."
+git_setup
+git add .
+# Restore .gitignore so we don't commit the changes
+git checkout HEAD .gitignore
 if expr $(git status --porcelain | wc -l) \> 0
 then
-  git_setup
-  git add .
-  git restore .gitignore
   git commit -m "$COMMIT_MESSAGE"
   git push
 else
