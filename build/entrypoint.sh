@@ -19,12 +19,7 @@ then
 fi
 
 echo "Installing NPM dependencies"
-npm install
+if test -e package-lock.json; then npm ci; else npm i; fi
 
-# First try Gulp, then try Grunt
-# Gulpfile.js can be a file or a directory:
-if [ -e "gulpfile.js" ]
-then
-  echo "Running Gulp with args"
-  sh -c "gulp $*"
-fi
+echo "Running gulp build"
+gulp build
