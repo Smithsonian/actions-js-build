@@ -36,7 +36,8 @@ echo "Checking for uncommitted changes in the git working tree."
 if expr $(git status --porcelain | wc -l) \> 0
 then
   git_setup
-  git add --all -- :!.gitignore
+  git add .
+  git restore .gitignore
   git commit -m "$COMMIT_MESSAGE"
   git push
 else
