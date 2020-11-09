@@ -1,0 +1,16 @@
+name: 'GitHub Action for git merge'
+description: 'Merges a given branch onto the working branch.'
+author: 'smithsonian'
+branding:
+  icon: 'git-commit'
+  color: 'green'
+inputs:
+  mergeBranch:
+    description: 'The branch to merge'
+    required: true
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    TARGET_BRANCH: ${{ inputs.mergeBranch }}
