@@ -1,49 +1,48 @@
-# GitHub Actions for JavaScript build tools (Gulp, Grunt, NPM -- and git)
+# Smithsonian Fork of elstudio/actions-js-build
 
-Run JS build tasks with Gulp, Grunt or NPM, then commit any changed files and push them back to your original repository.
+This fork has been modified to accommodate GitHub Actions needed for building
+sites that use forumone/gesso.
 
-Perfect for Grunt or Gulp tasks that do CSS (or SASS/LESS) compilation or JS transpilation.  If your build task changes files, these actions are for you.
+This repository contains three actions:
 
-This repository contains two actions that may be used independently -- typically one after another:
+- **merge** (smithsonian/actions-js-build/merge@master): Merges the specified `mergeBranch` onto the working branch specified in the 'Checkout working branch` step.
+- **build** (smithsonian/actions-js-build/build@master): Installs npm dependencies and then runs `gulp build`.
+- **commit** (smithsonian/actions-js-build/commit@master): Commits any file changes, and pushes them to the working branch specified in the 'Checkout working branch' step.
 
-- **build** (elstudio/actions-js-build/build@v2): Looks for a gulpfile.js or Gruntfile.js in the working directory, then installs any required npm packages and runs the appropriate build tool. If it finds neither gulp or grunt, the script runs npm. Set the workflow `args` arguments to run the tasks of your choice.
-- **commit** (elstudio/actions-js-build/commit@v3): Commits any file changes, and pushes them back to the current branch of the origin repository on GitHub.
-
-
-## Usage
-
-An example workflow to run `grunt default` task to build, test, then commit and push any changes back to the GitHub origin repository:
+## Example usage
 
 ```yaml
-name: Grunt build and commit updated stylesheets
+name: Build and commit Gesso theme files
 
-on: [push]
+on:
+  push:
+    branches: [ master ]
 
 jobs:
-  grunt-build:
-
+  gesso-dev-build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Compile with Grunt
-      uses: elstudio/actions-js-build/build@v2
+    - name: Checkout deploy branch
+      uses: actions/checkout@v2
       with:
-        wdPath: './web/themes/nw8'
+        ref: dev-deploy
 
-    - name: Commit changes
-      uses: elstudio/actions-js-build/commit@v3
+    - name: Merge master into deploy branch
+      uses: smithsonian/actions-js-build/merge@master
       with:
-        commitMessage: Regenerate css 
+        mergeBranch: master
+
+    - name: Compile with Gulp
+      uses: smithsonian/actions-js-build/build@master
+      with:
+        wdPath: ./htdocs/themes/gesso
+
+    - name: Commit changes to deploy branch
+      uses: smithsonian/actions-js-build/commit@master
+      with:
+        commitMessage: Automated commit by GitHub Actions to build Gesso files
 ```
-
-
-
-### Inputs
-
-* `wdPath` - **Optional**. To specify a directory other than the repository root where NPM's Package.json and either gulpfile.js or Gruntfile.js may be found.
-
 
 ## License
 
