@@ -13,7 +13,6 @@ git_setup ( ) {
   git config user.name "$GITHUB_ACTOR"
 }
 
-echo "Merging onto $TARGET_BRANCH."
+echo "Merging $GITHUB_REF."
 git_setup
-git checkout "$TARGET_BRANCH"
 git merge --no-ff "$GITHUB_REF"
