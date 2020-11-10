@@ -30,6 +30,8 @@ jobs:
 
     - name: Merge master into deploy branch
       uses: smithsonian/actions-js-build/merge@master
+      with:
+        mergeBranch: master
 
     - name: Compile with Gulp
       uses: smithsonian/actions-js-build/build@master

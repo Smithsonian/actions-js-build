@@ -8,6 +8,10 @@ For example, if this job is set to run when a new commit is pushed to 'master' a
 
 See [example configuration](../README.md#example-usage) for a workflow that includes a merge step.
 
+### Inputs
+
+* `mergeBranch` - **Required**. The branch to merge"
+
 ## License
 
 The Dockerfile and associated scripts and documentation in this project are released under the [MIT License](LICENSE).

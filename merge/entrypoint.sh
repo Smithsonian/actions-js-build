@@ -13,6 +13,7 @@ git_setup ( ) {
   git config user.name "$GITHUB_ACTOR"
 }
 
-echo "Merging $GITHUB_REF."
+echo "Merging $MERGE_BRANCH."
 git_setup
-git merge --no-ff "$GITHUB_REF"
+git fetch origin $MERGE_BRANCH
+git merge --no-ff --no-edit origin/$MERGE_BRANCH
