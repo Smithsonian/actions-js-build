@@ -46,7 +46,10 @@ git checkout HEAD .gitignore
 if expr $(git status --porcelain | wc -l) \> 0
 then
   git commit -m "$COMMIT_MESSAGE"
-  git push
 else
   echo "Working tree clean. Nothing to commit."
 fi
+
+# Push even if we didn't commit updated theme files to ensure the merge commit
+# from the merge step is pushed.
+git push
