@@ -15,5 +15,13 @@ git_setup ( ) {
 
 echo "Merging $MERGE_BRANCH."
 git_setup
+
+# Fetch and track the merge branch
 git fetch origin $MERGE_BRANCH
+git checkout --progress --force -B $MERGE_BRANCH refs/remotes/origin/$MERGE_BRANCH
+
+# Checkout the working branch
+git checkout -
+
+# Merge the merge branch into the working branch
 git merge --no-ff --no-edit origin/$MERGE_BRANCH
