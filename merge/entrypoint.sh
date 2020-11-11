@@ -19,11 +19,11 @@ git_setup
 # Fetch and track the merge branch
 echo "Checking out merge branch: $MERGE_BRANCH."
 git fetch origin $MERGE_BRANCH
-git checkout -b $MERGE_BRANCH origin/$MERGE_BRANCH
+git checkout -B $MERGE_BRANCH origin/$MERGE_BRANCH
 
 echo "Checking out working branch: $WORKING_BRANCH."
 git fetch origin $WORKING_BRANCH
-git checkout -b $WORKING_BRANCH origin/$WORKING_BRANCH
+git checkout -B $WORKING_BRANCH origin/$WORKING_BRANCH
 
 # Merge the merge branch into the working branch
 echo "Merging $MERGE_BRANCH into $WORKING_BRANCH."
