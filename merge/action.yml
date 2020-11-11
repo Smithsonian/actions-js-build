@@ -14,3 +14,4 @@ runs:
   image: 'Dockerfile'
   env:
     MERGE_BRANCH: ${{ inputs.mergeBranch }}
+    WORKING_BRANCH: ${{ inputs.workingBranch }}

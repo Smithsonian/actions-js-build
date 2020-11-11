@@ -1,8 +1,9 @@
 #!/bin/sh
-## This GitHub Action for git merges the origin branch onto a target branch.
+## This GitHub Action for git merges the merge branch onto a working branch.
 ##
 ## Required environment variables:
-## - $TARGET_BRANCH: The branch to merge into
+## - $MERGE_BRANCH: The branch to merge
+## - $WORKING_BRANCH: The branch to merge into
 
 set -e
 
@@ -13,15 +14,17 @@ git_setup ( ) {
   git config user.name "$GITHUB_ACTOR"
 }
 
-echo "Merging $MERGE_BRANCH."
 git_setup
 
 # Fetch and track the merge branch
+echo "Checking out merge branch: $MERGE_BRANCH."
 git fetch origin $MERGE_BRANCH
-git checkout --progress --force -B $MERGE_BRANCH refs/remotes/origin/$MERGE_BRANCH
+git checkout -b $MERGE_BRANCH origin/$MERGE_BRANCH
 
-# Checkout the working branch
-git checkout -
+echo "Checking out working branch: $WORKING_BRANCH."
+git fetch origin $WORKING_BRANCH
+git checkout -b $WORKING_BRANCH origin/$WORKING_BRANCH
 
 # Merge the merge branch into the working branch
-git merge --no-ff --no-edit origin/$MERGE_BRANCH
+echo "Merging $MERGE_BRANCH into $WORKING_BRANCH."
+git merge --no-ff --no-edit $MERGE_BRANCH

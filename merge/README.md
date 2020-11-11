@@ -10,7 +10,8 @@ See [example configuration](../README.md#example-usage) for a workflow that incl
 
 ### Inputs
 
-* `mergeBranch` - **Required**. The branch to merge"
+* `mergeBranch` - **Required**. The branch to merge
+* `workingBranch` - **Required**. The branch to merge into
 
 ## License
 
