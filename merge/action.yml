@@ -9,6 +9,10 @@ inputs:
     description: 'The branch to merge'
     required: true
     default: ''
+  workingBranch:
+    description: 'The branch to merge into'
+    required: true
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
